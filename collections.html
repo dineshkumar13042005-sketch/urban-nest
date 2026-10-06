@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Furniture Gallery — Urban Nest | Pure Photo Collection</title>
+  <meta name="description" content="Browse Urban Nest's complete furniture photo gallery in Coimbatore. High quality photos of living room sofas, bedroom cots, teak wood dining sets, and decor.">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Photo Only Card Styling */
+    .photo-only-card {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-medium);
+      background: #FFFFFF;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      aspect-ratio: 4 / 3;
+    }
+    .photo-only-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-olive);
+    }
+    .photo-only-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .photo-only-card:hover img {
+      transform: scale(1.06);
+    }
+    .photo-view-icon {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+      color: #FFFFFF;
+      font-size: 2rem;
+    }
+    .photo-only-card:hover .photo-view-icon {
+      opacity: 1;
+    }
+    /* Lightbox Modal */
+    dialog#lightboxDialog {
+      margin: auto;
+      border: none;
+      border-radius: var(--radius-md);
+      background: rgba(18, 20, 18, 0.95);
+      color: #FFF;
+      padding: 16px;
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      overflow: hidden;
+    }
+    dialog#lightboxDialog::backdrop {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+    }
+    .lightbox-img-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-img-wrapper img {
+      max-width: 85vw;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    .lightbox-close-btn {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--primary-olive);
+      color: #FFF;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navbar matching reference design -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <svg class="logo-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        URBAN NEST
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="collections.html" class="active">COLLECTIONS</a></li>
+        <li><a href="custom-furniture.html">CUSTOM</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://wa.me/917708877588?text=Hi%20Urban%20Nest,%20I'm%20exploring%20your%20furniture%20gallery." target="_blank" class="btn btn-whatsapp">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Collections Header -->
+  <section class="section-padding" style="padding-top: calc(var(--header-height) + 40px); background: var(--bg-main);">
+    <div class="container">
+      <div class="section-label-line">
+        <h1 class="section-title">EXPLORE THE COLLECTION</h1>
+        <p class="section-subtitle">Click any photo to view full size.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Only Gallery Grid (Images 1.jpeg to 27.jpeg) -->
+  <section class="section-padding" style="background: var(--bg-subtle); padding-top: 30px;">
+    <div class="container">
+
+      <!-- Pure Images Grid (1.jpeg to 27.jpeg) -->
+      <div class="grid-3" id="productGrid">
+        
+        <!-- 1.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('1.jpeg')">
+          <img src="1.jpeg" alt="Urban Nest Photo 1">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 2.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('2.jpeg')">
+          <img src="2.jpeg" alt="Urban Nest Photo 2">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 3.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('3.jpeg')">
+          <img src="3.jpeg" alt="Urban Nest Photo 3">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 4.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('4.jpeg')">
+          <img src="4.jpeg" alt="Urban Nest Photo 4">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 5.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('5.jpeg')">
+          <img src="5.jpeg" alt="Urban Nest Photo 5">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 6.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('6.jpeg')">
+          <img src="6.jpeg" alt="Urban Nest Photo 6">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 7.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('7.jpeg')">
+          <img src="7.jpeg" alt="Urban Nest Photo 7">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 8.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('8.jpeg')">
+          <img src="8.jpeg" alt="Urban Nest Photo 8">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 9.jpeg (LIVING) -->
+        <div class="photo-only-card product-item" data-category="living" onclick="openLightbox('9.jpeg')">
+          <img src="9.jpeg" alt="Urban Nest Photo 9">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 10.jpeg (BEDROOM) -->
+        <div class="photo-only-card product-item" data-category="bedroom" onclick="openLightbox('10.jpeg')">
+          <img src="10.jpeg" alt="Urban Nest Photo 10">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 11.jpeg (BEDROOM) -->
+        <div class="photo-only-card product-item" data-category="bedroom" onclick="openLightbox('11.jpeg')">
+          <img src="11.jpeg" alt="Urban Nest Photo 11">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 12.jpeg (BEDROOM) -->
+        <div class="photo-only-card product-item" data-category="bedroom" onclick="openLightbox('12.jpeg')">
+          <img src="12.jpeg" alt="Urban Nest Photo 12">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 13.jpeg (BEDROOM) -->
+        <div class="photo-only-card product-item" data-category="bedroom" onclick="openLightbox('13.jpeg')">
+          <img src="13.jpeg" alt="Urban Nest Photo 13">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 14.jpeg (BEDROOM) -->
+        <div class="photo-only-card product-item" data-category="bedroom" onclick="openLightbox('14.jpeg')">
+          <img src="14.jpeg" alt="Urban Nest Photo 14">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 15.jpeg (DINING) -->
+        <div class="photo-only-card product-item" data-category="dining" onclick="openLightbox('15.jpeg')">
+          <img src="15.jpeg" alt="Urban Nest Photo 15">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 16.jpeg (DINING) -->
+        <div class="photo-only-card product-item" data-category="dining" onclick="openLightbox('16.jpeg')">
+          <img src="16.jpeg" alt="Urban Nest Photo 16">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 17.jpeg (DINING) -->
+        <div class="photo-only-card product-item" data-category="dining" onclick="openLightbox('17.jpeg')">
+          <img src="17.jpeg" alt="Urban Nest Photo 17">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 18.jpeg (DINING) -->
+        <div class="photo-only-card product-item" data-category="dining" onclick="openLightbox('18.jpeg')">
+          <img src="18.jpeg" alt="Urban Nest Photo 18">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 19.jpeg (TEAK) -->
+        <div class="photo-only-card product-item" data-category="teak" onclick="openLightbox('19.jpeg')">
+          <img src="19.jpeg" alt="Urban Nest Photo 19">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 20.jpeg (TEAK) -->
+        <div class="photo-only-card product-item" data-category="teak" onclick="openLightbox('20.jpeg')">
+          <img src="20.jpeg" alt="Urban Nest Photo 20">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 21.jpeg (TEAK) -->
+        <div class="photo-only-card product-item" data-category="teak" onclick="openLightbox('21.jpeg')">
+          <img src="21.jpeg" alt="Urban Nest Photo 21">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 22.jpeg (TEAK) -->
+        <div class="photo-only-card product-item" data-category="teak" onclick="openLightbox('22.jpeg')">
+          <img src="22.jpeg" alt="Urban Nest Photo 22">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 23.jpeg (DECOR) -->
+        <div class="photo-only-card product-item" data-category="decor" onclick="openLightbox('23.jpeg')">
+          <img src="23.jpeg" alt="Urban Nest Photo 23">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 24.jpeg (DECOR) -->
+        <div class="photo-only-card product-item" data-category="decor" onclick="openLightbox('24.jpeg')">
+          <img src="24.jpeg" alt="Urban Nest Photo 24">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 25.jpeg (DECOR) -->
+        <div class="photo-only-card product-item" data-category="decor" onclick="openLightbox('25.jpeg')">
+          <img src="25.jpeg" alt="Urban Nest Photo 25">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 26.jpeg (DECOR) -->
+        <div class="photo-only-card product-item" data-category="decor" onclick="openLightbox('26.jpeg')">
+          <img src="26.jpeg" alt="Urban Nest Photo 26">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+        <!-- 27.jpeg (DECOR) -->
+        <div class="photo-only-card product-item" data-category="decor" onclick="openLightbox('27.jpeg')">
+          <img src="27.jpeg" alt="Urban Nest Photo 27">
+          <div class="photo-view-icon"><i class="fas fa-search-plus"></i></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Fullscreen Image Lightbox Modal -->
+  <dialog id="lightboxDialog">
+    <div class="lightbox-img-wrapper">
+      <button class="lightbox-close-btn" onclick="closeLightbox()">&times;</button>
+      <img id="lightboxTargetImg" src="" alt="Full View Photo">
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="brand-logo" style="color: #FFF; margin-bottom: 16px;">
+            URBAN NEST
+          </a>
+          <p style="color: #A5ABA0; font-size: 0.88rem; margin-bottom: 20px;">
+            A destination for modern furniture and contemporary home styling in Coimbatore.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>EXPLORE</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="collections.html">COLLECTIONS</a></li>
+            <li><a href="custom-furniture.html">CUSTOM FURNITURE</a></li>
+            <li><a href="about.html">OUR STORY</a></li>
+            <li><a href="contact.html">SHOWROOM & CONTACT</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>CATEGORIES</h4>
+          <ul class="footer-links">
+            <li><a href="collections.html?category=living">LIVING ROOM</a></li>
+            <li><a href="collections.html?category=bedroom">BEDROOM</a></li>
+            <li><a href="collections.html?category=dining">DINING</a></li>
+            <li><a href="collections.html?category=teak">TEAK COLLECTION</a></li>
+            <li><a href="collections.html?category=decor">HOME DÉCOR</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>SHOWROOM INFO</h4>
+          <p style="color: #A5ABA0; font-size: 0.88rem; margin-bottom: 10px;">
+            📍 No. 33/28, Thudiyalur Road, Chinnavedampatti, Coimbatore – 641049
+          </p>
+          <p style="color: #A5ABA0; font-size: 0.88rem; margin-bottom: 6px;">
+            📞 7708877588 / 9244336106
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Urban Nest Furniture. All rights reserved. Coimbatore, Tamil Nadu.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/917708877588?text=Hi%20Urban%20Nest,%20I'm%20exploring%20your%20furniture%20gallery." target="_blank" class="whatsapp-float" aria-label="WhatsApp Enquiry">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Mobile Sticky Bar -->
+  <div class="mobile-sticky-bar">
+    <a href="tel:7708877588" class="mobile-action-btn call">
+      <i class="fas fa-phone-alt"></i> Call
+    </a>
+    <a href="https://wa.me/917708877588?text=Hi%20Urban%20Nest,%20I'm%20exploring%20your%20furniture%20gallery." target="_blank" class="mobile-action-btn wa">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <a href="contact.html" class="mobile-action-btn nav">
+      <i class="fas fa-location-dot"></i> Showroom
+    </a>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    function openLightbox(imgSrc) {
+      const dialog = document.getElementById('lightboxDialog');
+      const targetImg = document.getElementById('lightboxTargetImg');
+      if (dialog && targetImg) {
+        targetImg.src = imgSrc;
+        dialog.showModal();
+      }
+    }
+
+    function closeLightbox() {
+      const dialog = document.getElementById('lightboxDialog');
+      if (dialog) dialog.close();
+    }
+
+    // Light-dismiss lightbox modal on backdrop click
+    const dialog = document.getElementById('lightboxDialog');
+    if (dialog) {
+      dialog.addEventListener('click', (e) => {
+        const rect = dialog.getBoundingClientRect();
+        if (
+          e.clientX < rect.left ||
+          e.clientX > rect.right ||
+          e.clientY < rect.top ||
+          e.clientY > rect.bottom
+        ) {
+          dialog.close();
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryParam = urlParams.get('category');
+      if (categoryParam) {
+        const tabToClick = document.querySelector(`.filter-tab[data-filter="${categoryParam}"]`);
+        if (tabToClick) tabToClick.click();
+      }
+    });
+  </script>
+</body>
+</html>
